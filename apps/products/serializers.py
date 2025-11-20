@@ -5,10 +5,15 @@ from .models import Category, Product, ProductImage, ProductSpecification, Produ
 class CategorySerializer(serializers.ModelSerializer):
     """商品分类序列化器"""
     children = serializers.SerializerMethodField()
+    icon = serializers.SerializerMethodField()  # 改为 SerializerMethodField 以使用 get_icon_url
     
     class Meta:
         model = Category
         fields = ['id', 'name', 'parent', 'icon', 'description', 'sort_order', 'is_active', 'children']
+    
+    def get_icon(self, obj):
+        """获取分类图标URL，优先使用本地文件"""
+        return obj.get_icon_url()
     
     def get_children(self, obj):
         if obj.children.exists():

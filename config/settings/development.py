@@ -3,9 +3,13 @@ from .base import *
 # Development settings
 DEBUG = True
 
-# Database for development
+# Database for development - 连接服务器上的 MySQL
 DATABASES['default'].update({
+    'HOST': '8.134.151.99',  # 服务器 IP 地址
+    'PORT': '3306',  # 服务器 MySQL 端口
     'NAME': '5100water',
+    'USER': 'jzha213',  # 服务器 MySQL 用户名
+    'PASSWORD': 'zHaijun8288?',  # 服务器 MySQL 密码
 })
 
 # Disable cache in development

@@ -6,7 +6,8 @@ class Category(BaseModel):
     """商品分类模型"""
     name = models.CharField('分类名称', max_length=100)
     parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children')
-    icon = models.URLField('分类图标', blank=True)
+    icon = models.URLField('分类图标URL', blank=True, help_text='如果上传了图片文件，则优先使用图片文件')
+    icon_file = models.ImageField('分类图标文件', upload_to='categories/icons/', blank=True, null=True, help_text='上传本地图片作为分类图标')
     description = models.TextField('分类描述', blank=True)
     sort_order = models.IntegerField('排序', default=0)
     is_active = models.BooleanField('是否启用', default=True)
@@ -21,6 +22,13 @@ class Category(BaseModel):
             models.Index(fields=['is_active']),
         ]
         ordering = ['sort_order', 'id']
+    
+    def get_icon_url(self):
+        """获取分类图标URL，优先使用本地文件"""
+        if self.icon_file:
+            # icon_file.url 已经包含了 MEDIA_URL 前缀
+            return self.icon_file.url
+        return self.icon if self.icon else None
     
     def __str__(self):
         return self.name
