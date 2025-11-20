@@ -1,0 +1,140 @@
+#!/usr/bin/env python
+"""
+API接口测试脚本
+测试所有主要API端点的功能
+"""
+import requests
+import json
+import sys
+
+BASE_URL = "http://127.0.0.1:8000"
+
+def test_health_check():
+    """测试健康检查接口"""
+    print("🔍 测试健康检查接口...")
+    try:
+        response = requests.get(f"{BASE_URL}/health/")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ 健康检查成功: {data}")
+            return True
+        else:
+            print(f"❌ 健康检查失败: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"❌ 健康检查异常: {e}")
+        return False
+
+def test_admin_access():
+    """测试管理后台访问"""
+    print("\n🔍 测试管理后台访问...")
+    try:
+        response = requests.get(f"{BASE_URL}/admin/")
+        if response.status_code == 200:
+            print("✅ 管理后台可访问")
+            return True
+        else:
+            print(f"❌ 管理后台访问失败: {response.status_code}")
+            return False
+    except Exception as e:
+        print(f"❌ 管理后台访问异常: {e}")
+        return False
+
+def test_products_api():
+    """测试商品API"""
+    print("\n🔍 测试商品API...")
+    try:
+        response = requests.get(f"{BASE_URL}/api/v1/products/")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ 商品API正常: 返回 {len(data.get('results', []))} 个商品")
+            return True
+        else:
+            print(f"❌ 商品API失败: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ 商品API异常: {e}")
+        return False
+
+def test_users_api():
+    """测试用户API"""
+    print("\n🔍 测试用户API...")
+    try:
+        response = requests.get(f"{BASE_URL}/api/v1/users/")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ 用户API正常: 返回 {len(data.get('results', []))} 个用户")
+            return True
+        else:
+            print(f"❌ 用户API失败: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ 用户API异常: {e}")
+        return False
+
+def test_orders_api():
+    """测试订单API"""
+    print("\n🔍 测试订单API...")
+    try:
+        response = requests.get(f"{BASE_URL}/api/v1/orders/")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ 订单API正常: 返回 {len(data.get('results', []))} 个订单")
+            return True
+        else:
+            print(f"❌ 订单API失败: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ 订单API异常: {e}")
+        return False
+
+def test_cart_api():
+    """测试购物车API"""
+    print("\n🔍 测试购物车API...")
+    try:
+        response = requests.get(f"{BASE_URL}/api/v1/cart/")
+        if response.status_code == 200:
+            data = response.json()
+            print(f"✅ 购物车API正常: 返回 {len(data.get('results', []))} 个购物车项目")
+            return True
+        else:
+            print(f"❌ 购物车API失败: {response.status_code} - {response.text}")
+            return False
+    except Exception as e:
+        print(f"❌ 购物车API异常: {e}")
+        return False
+
+def main():
+    """主测试函数"""
+    print("🚀 开始测试5100订水API接口...")
+    print("=" * 50)
+    
+    tests = [
+        test_health_check,
+        test_admin_access,
+        test_products_api,
+        test_users_api,
+        test_orders_api,
+        test_cart_api,
+    ]
+    
+    passed = 0
+    total = len(tests)
+    
+    for test in tests:
+        if test():
+            passed += 1
+    
+    print("\n" + "=" * 50)
+    print(f"📊 测试结果: {passed}/{total} 通过")
+    
+    if passed == total:
+        print("🎉 所有测试通过！API接口运行正常！")
+    else:
+        print("⚠️  部分测试失败，请检查服务器状态")
+    
+    return passed == total
+
+if __name__ == "__main__":
+    success = main()
+    sys.exit(0 if success else 1)

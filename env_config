@@ -1,0 +1,38 @@
+# Django Settings
+DEBUG=True
+SECRET_KEY=django-insecure-change-this-in-production-5100water-api-key-2025
+ALLOWED_HOSTS=localhost,127.0.0.1
+
+# Database Settings
+DB_HOST=127.0.0.1
+DB_PORT=3307
+DB_NAME=5100water
+DB_USER=root
+DB_PASSWORD=zjzj828
+
+# Redis Settings
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+REDIS_PASSWORD=
+
+# WeChat Settings
+WECHAT_APP_ID=your-wechat-app-id
+WECHAT_APP_SECRET=your-wechat-app-secret
+
+# WeChat Pay Settings
+WECHAT_PAY_MCH_ID=your-mch-id
+WECHAT_PAY_API_KEY=your-api-key
+WECHAT_PAY_CERT_PATH=/path/to/cert.pem
+WECHAT_PAY_KEY_PATH=/path/to/key.pem
+
+# SMS Settings
+SMS_ACCESS_KEY_ID=your-access-key-id
+SMS_ACCESS_KEY_SECRET=your-access-key-secret
+
+# File Storage
+DEFAULT_FILE_STORAGE=django.core.files.storage.FileSystemStorage
+MEDIA_ROOT=media/
+MEDIA_URL=/media/
+
+# Logging
+LOG_LEVEL=INFO
