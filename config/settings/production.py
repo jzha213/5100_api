@@ -17,8 +17,24 @@ CSRF_COOKIE_SECURE = False
 # Static files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# Media files (use cloud storage in production)
-# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# =======================
+# Media files（生产环境）
+# =======================
+# 说明：
+# - 开发环境（development.py）使用 BASE_DIR / 'media'
+# - 生产环境统一使用服务器上的 /var/www/5100_media 目录，方便 Nginx 直接映射
+# - 这样分类图标、商品图片、头像等所有上传文件都会保存到 /var/www/5100_media 下
+from pathlib import Path
+MEDIA_ROOT = Path('/var/www/5100_media')
+
+# 保持 URL 前缀不变，仍然是 /media/
+# Nginx 需要有类似配置：
+#   location /media/ {
+#       alias /var/www/5100_media/;
+#   }
+
+# 使用本地文件系统存储
+# 如果将来要用云存储（如 OSS、S3），可以在这里替换存储后端
 DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
 
 # Logging for production
