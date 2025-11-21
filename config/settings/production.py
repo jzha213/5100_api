@@ -14,7 +14,15 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 
-# Static files
+# =======================
+# Static files（生产环境）
+# =======================
+# 说明：
+# - 开发环境使用 BASE_DIR / 'static' 作为源码目录，STATIC_ROOT = BASE_DIR / 'staticfiles'
+# - 生产环境建议把收集后的静态文件放到 /var/www/5100_static，方便 Nginx 直接访问
+# - 你可以在服务器上运行：python manage.py collectstatic，把所有静态文件收集到 STATIC_ROOT
+from pathlib import Path
+STATIC_ROOT = Path('/var/www/5100_static')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # =======================
@@ -24,7 +32,6 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # - 开发环境（development.py）使用 BASE_DIR / 'media'
 # - 生产环境统一使用服务器上的 /var/www/5100_media 目录，方便 Nginx 直接映射
 # - 这样分类图标、商品图片、头像等所有上传文件都会保存到 /var/www/5100_media 下
-from pathlib import Path
 MEDIA_ROOT = Path('/var/www/5100_media')
 
 # 保持 URL 前缀不变，仍然是 /media/
