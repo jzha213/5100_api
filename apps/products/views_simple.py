@@ -34,11 +34,16 @@ def product_list(request):
         products = products.filter(name__icontains=search)
     
     # 处理排序
-    sort_by = request.GET.get('sort', '-created_at')
-    if sort_by in ['price', '-price', 'sales_count', '-sales_count', 'created_at', '-created_at']:
+    # 如果是推荐商品，默认按 sort_order 排序（从小到大）
+    sort_by = request.GET.get('sort')
+    if is_featured and is_featured.lower() in ['true', '1', 'yes'] and not sort_by:
+        # 推荐商品默认按 sort_order 从小到大排序
+        products = products.order_by('sort_order', 'id')
+    elif sort_by and sort_by in ['price', '-price', 'sales_count', '-sales_count', 'created_at', '-created_at', 'sort_order', '-sort_order']:
         products = products.order_by(sort_by)
     else:
-        products = products.order_by('-created_at')
+        # 默认按模型的 ordering 排序：sort_order, -created_at
+        products = products.order_by('sort_order', '-created_at')
     
     serializer = ProductListSerializer(products, many=True)
     return Response({
