@@ -6,12 +6,21 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.http import JsonResponse
+from django.shortcuts import render
 
 # Simple health check view
 def health_check(request):
     return JsonResponse({'status': 'healthy', 'message': '5100 Water Delivery API is running'})
 
+# Home page view
+def home(request):
+    """主页面视图"""
+    return render(request, 'index.html')
+
 urlpatterns = [
+    # Home page - 主页面
+    path('', home, name='home'),
+    
     # Health check
     path('health/', health_check, name='health-check'),
     
