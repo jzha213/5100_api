@@ -17,7 +17,6 @@
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
             color: #ffffff;
             padding: 20px;
@@ -25,16 +24,188 @@
         
         .container {
             text-align: center;
-            max-width: 600px;
+            max-width: 1200px;
             width: 100%;
+            margin-top: 100px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        /* 内容展示窗口 */
+        .content-window {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 700px;
+            max-width: 90vw;
+            max-height: 80vh;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            overflow: hidden;
+            border: 4px solid rgba(102, 126, 234, 0.3);
+            display: none; /* 默认隐藏 */
+            animation: windowFadeIn 0.5s ease-in;
+        }
+        
+        .content-window-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 30px;
+            color: #ffffff;
+            text-align: center;
+            position: relative;
+        }
+        
+        .content-window-title {
+            font-size: 32px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .content-window-body {
+            padding: 40px;
+            max-height: calc(80vh - 150px);
+            overflow-y: auto;
+            color: #333;
+        }
+        
+        .content-window-body p {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .content-window-body ul {
+            margin: 20px 0;
+        }
+        
+        .content-window-body li {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 10px;
+        }
+        
+        .content-window-body img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        /* 关闭按钮 */
+        .close-window {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 35px;
+            height: 35px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 24px;
+            color: #667eea;
+            z-index: 21;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .close-window:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: rotate(90deg) scale(1.1);
+        }
+        
+        /* 卡片点击效果 */
+        .section-card {
+            cursor: pointer;
+        }
+        
+        @keyframes windowFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
         
         .welcome-title {
             font-size: 48px;
             font-weight: bold;
-            margin-bottom: 30px;
+            margin-bottom: 60px;
             text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
             animation: fadeIn 1s ease-in;
+        }
+        
+        .sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+            max-width: 1200px;
+            width: 100%;
+        }
+        
+        .section-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .section-content {
+            font-size: 16px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .section-link {
+            color: #667eea;
+            text-decoration: none;
+            margin-top: 15px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .section-link:hover {
+            color: #764ba2;
         }
         
         .footer {
@@ -68,20 +239,136 @@
             }
         }
         
+        /* 遮罩层 - 让背景变暗，突出展示窗口 */
+        .story-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 999;
+            backdrop-filter: blur(5px);
+            display: none; /* 默认隐藏 */
+        }
+        
         @media (max-width: 768px) {
             .welcome-title {
                 font-size: 36px;
+                margin-bottom: 40px;
+            }
+            
+            .container {
+                margin-top: 60px;
+            }
+            
+            .sections {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                margin-bottom: 40px;
+            }
+            
+            .section-card {
+                padding: 30px 20px;
+            }
+            
+            .section-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 28px;
+            }
+            
+            .section-title {
+                font-size: 20px;
+            }
+            
+            .section-content {
+                font-size: 14px;
             }
             
             .footer {
                 font-size: 12px;
             }
+            
+            /* 移动端调整展示窗口 */
+            .content-window {
+                width: 90vw;
+                max-height: 85vh;
+            }
+            
+            .content-window-header {
+                padding: 20px;
+            }
+            
+            .content-window-title {
+                font-size: 24px;
+            }
+            
+            .content-window-body {
+                padding: 30px 20px;
+                font-size: 16px;
+            }
+            
+            .content-window-body p {
+                font-size: 16px;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- 内容展示窗口 -->
+    <div class="story-overlay" id="contentOverlay" onclick="closeContentWindow()"></div>
+    <div class="content-window" id="contentWindow">
+        <div class="close-window" onclick="closeContentWindow()">×</div>
+        <div class="content-window-header">
+            <h2 class="content-window-title" id="contentWindowTitle"></h2>
+        </div>
+        <div class="content-window-body" id="contentWindowBody">
+            <!-- 内容将动态插入这里 -->
+        </div>
+    </div>
+    
     <div class="container">
-        <h1 class="welcome-title">欢迎来到三泰科技</h1>
+        <h1 class="welcome-title">欢迎光临三泰科技</h1>
+        
+        <div class="sections">
+            <!-- 公司简介 -->
+            <div class="section-card" onclick="showContent('company')">
+                <div class="section-icon">🏢</div>
+                <h2 class="section-title">公司简介</h2>
+                <p class="section-content">
+                    三泰科技是一家专注于智能科技服务的企业，致力于为客户提供优质的解决方案和专业的服务支持。
+                </p>
+            </div>
+            
+            <!-- 产品展示 -->
+            <div class="section-card" onclick="showContent('products')">
+                <div class="section-icon">🧪</div>
+                <h2 class="section-title">产品展示</h2>
+                <p class="section-content">
+                    我们提供锐钛型，金红石型钛白粉系列产品，品质保证，值得信赖！
+                </p>
+            </div>
+            
+            <!-- 合作单位 -->
+            <div class="section-card" onclick="showContent('partners')">
+                <div class="section-icon">🤝</div>
+                <h2 class="section-title">合作单位</h2>
+                <p class="section-content">
+                    我们与众多知名企业建立了长期稳定的合作关系，共同推动行业发展，实现互利共赢。
+                </p>
+            </div>
+            
+            <!-- 联系我们 -->
+            <div class="section-card" onclick="showContent('contact')">
+                <div class="section-icon">📞</div>
+                <h2 class="section-title">联系我们</h2>
+                <p class="section-content">
+                    如有任何需求或疑问，欢迎随时与我们联系。我们将竭诚为您提供服务和支持。
+                </p>
+            </div>
+            
+        </div>
     </div>
     
     <div class="footer">
@@ -89,6 +376,125 @@
             桂ICP备2025075319号-2
         </a>
     </div>
+    
+    <script>
+        // 内容数据
+        const contentData = {
+            company: {
+                title: '公司简介',
+                content: `
+                    <p>三泰科技是一家从事钛白粉研发生产销售、工艺品销售等业务的公司，成立于2000年02月22日，公司坐落在广西桂林市。</p>
+                    <p>三泰科技同时专注于智能科技服务，致力于为客户提供优质的解决方案和专业的服务支持。</p>
+                    <p><strong>企业的经营范围包括：</strong></p>
+                    <ul style="line-height: 2; margin-left: 20px;">
+                        <li>新型复合钛白粉研发、生产、销售</li>
+                        <li>包膜钛白粉研发、生产、销售</li>
+                        <li>工艺品销售</li>
+                        <li>智能科技服务解决方案</li>
+                        <li>企业数字化转型服务</li>
+                        <li>技术咨询与支持</li>
+                    </ul>
+                    <p>三泰科技秉承"诚信、创新、共赢"的经营理念，与客户携手共进，共创美好未来。</p>
+                `
+            },
+            products: {
+                title: '产品展示',
+                content: `
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <img src="/static/assets/images/titanium-dioxide.jpg" alt="钛白粉产品图" style="max-width: 100%; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+                    </div>
+                    
+                    <p><strong>中文名称：</strong>钛白粉</p>
+                    <p><strong>英文名称：</strong>Titanium(IV) oxide</p>
+                    
+                    <p><strong>中文别名：</strong></p>
+                    <p style="margin-left: 20px;">C.I.颜料白6；钛白粉；钛白；钛酸杆；二氧化钛；钛糖；钛酐；二氧化钛(IV)；金红石；锐钛矿；钛白颜料0-520；二氧化鈦；氧化钛(IV)；钛白粉(纳米级)；二氧化钛(纳米级)</p>
+                    
+                    <p><strong>英文别名：</strong></p>
+                    <p style="margin-left: 20px;">C.I. 77891; C.I. Pigment White 6; Titanium dioxide; Titanium Dioxide Anatase; Titanium Oxide; Titania; Titanium (IV) dioxide; Rutile; dioxotitanium</p>
+                    
+                    <p><strong>产品用途：</strong></p>
+                    <ul style="line-height: 2; margin-left: 20px;">
+                        <li>用于油漆、油墨、塑料、橡胶、造纸、化纤等行业</li>
+                        <li>用于电焊条，提炼钛和制造钛白粉</li>
+                        <li>钛白粉(纳米级)广泛应用于功能陶瓷、催化剂、化妆品和光敏材料等白色无机颜料</li>
+                        <li>钛白粉广泛用作油漆、纸张、橡胶、塑料、搪瓷、玻璃、化妆品、油墨、水彩和油彩的颜料</li>
+                        <li>还可用于冶金、无线电、陶瓷、电焊条</li>
+                    </ul>
+                    
+                    <p><strong>产品特性：</strong></p>
+                    <ul style="line-height: 2; margin-left: 20px;">
+                        <li>是白色颜料中着色力最强的一种，具有优良的遮盖力和着色牢度，适用于不透明的白色制品</li>
+                        <li>金红石型特别适用于室外使用的塑料制品，可赋予制品良好的光稳定性</li>
+                        <li>锐钛型主要用于室内使用制品，但略带蓝光，白度高、遮盖力大、着色力强且分散性较好</li>
+                    </ul>
+                `
+            },
+            partners: {
+                title: '合作单位',
+                content: `
+                    <p>我们与众多知名企业建立了长期稳定的合作关系，共同推动行业发展，实现互利共赢。</p>
+                    <p><strong>战略合作伙伴：</strong></p>
+                    <ul style="line-height: 2; margin-left: 20px;">
+                        <li>国内知名连锁超市</li>
+                        <li>大型电商平台</li>
+                        <li>企业团购服务商</li>
+                        <li>物流配送企业</li>
+                    </ul>
+                    <p><strong>合作优势：</strong></p>
+                    <p>我们致力于与合作伙伴建立长期稳定的合作关系，通过资源共享、优势互补，实现共同发展。我们提供：</p>
+                    <ul style="line-height: 2; margin-left: 20px;">
+                        <li>优质的产品和服务</li>
+                        <li>灵活的商务合作模式</li>
+                        <li>专业的市场支持</li>
+                        <li>完善的售后服务体系</li>
+                    </ul>
+                    <p>欢迎有合作意向的企业与我们联系，携手共创美好未来！</p>
+                `
+            },
+            contact: {
+                title: '联系我们',
+                content: `
+                    <p>如有任何需求或疑问，欢迎随时与我们联系。我们将竭诚为您提供服务和支持。</p>
+                    <p><strong>联系方式：</strong></p>
+                    <ul style="line-height: 2.5; margin-left: 20px;">
+                        <li><strong>公司办公地址：</strong>中国广西桂林市秀峰区中山中路39号，南方大厦9楼</li>
+                        <li><strong>联系电话：</strong>13768331958</li>
+                        <li><strong>官方网站：</strong>www.santaikeji.top</li>
+                    </ul>
+                    <p><strong>服务时间：</strong></p>
+                    <p>周一至周五：9:00 - 18:00<br>周六至周日：10:00 - 17:00</p>
+                    <p><strong>在线客服：</strong></p>
+                    <p>您也可以通过我们的官方网站或小程序在线咨询，我们的客服团队会在工作时间内及时回复您的问题。</p>
+                    <p>感谢您对三泰科技的关注与支持！</p>
+                `
+            }
+        };
+        
+        // 显示内容窗口
+        function showContent(type) {
+            const data = contentData[type];
+            if (!data) return;
+            
+            document.getElementById('contentWindowTitle').textContent = data.title;
+            document.getElementById('contentWindowBody').innerHTML = data.content;
+            document.getElementById('contentWindow').style.display = 'block';
+            document.getElementById('contentOverlay').style.display = 'block';
+        }
+        
+        // 关闭内容窗口
+        function closeContentWindow() {
+            document.getElementById('contentWindow').style.display = 'none';
+            document.getElementById('contentOverlay').style.display = 'none';
+        }
+        
+        // 按ESC键关闭窗口
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeContentWindow();
+            }
+        });
+    </script>
 </body>
 </html>
 
