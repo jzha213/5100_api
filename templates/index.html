@@ -216,15 +216,37 @@
             text-align: center;
             font-size: 14px;
             color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
         }
         
-        .icp-link {
+        .beian-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        
+        .beian-icon {
+            width: 16px;
+            height: 16px;
+            vertical-align: middle;
+            display: inline-block;
+        }
+        
+        .icp-link, .beian-link {
             color: rgba(255, 255, 255, 0.8);
             text-decoration: none;
             transition: color 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
         }
         
-        .icp-link:hover {
+        .icp-link:hover, .beian-link:hover {
             color: rgba(255, 255, 255, 1);
         }
         
@@ -372,9 +394,17 @@
     </div>
     
     <div class="footer">
-        <a href="https://beian.miit.gov.cn/" target="_blank" class="icp-link" rel="noopener noreferrer">
-            桂ICP备2025075319号-2
-        </a>
+        <div class="beian-info">
+            <a href="https://beian.mps.gov.cn/#/query/webSearch?code=45030202000229" rel="noreferrer" target="_blank" class="beian-link">
+                <img src="/static/assets/images/beian-icon.png" alt="公安备案图标" class="beian-icon" onerror="this.style.display='none'">
+                桂公网安备45030202000229号
+            </a>
+        </div>
+        <div>
+            <a href="https://beian.miit.gov.cn/" target="_blank" class="icp-link" rel="noopener noreferrer">
+                桂ICP备2025075319号-2
+            </a>
+        </div>
     </div>
     
     <script>
@@ -462,6 +492,7 @@
                         <li><strong>联系电话：</strong></li>
                         <li style="margin-left: 40px;">13768331958（钛白粉）</li>
                         <li style="margin-left: 40px;">13507732983（智能科技服务）</li>
+                        <li><strong>电子邮箱：</strong>1257341773@qq.com</li>
                         <li><strong>官方网站：</strong>www.santaikeji.top</li>
                     </ul>
                     <p><strong>服务时间：</strong></p>
